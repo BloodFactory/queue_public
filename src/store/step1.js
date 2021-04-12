@@ -18,7 +18,7 @@ export default {
     actions: {
         loadOrganizations({commit}) {
             return api({
-                url: '/steps/organizations',
+                url: '/requests/step1',
                 methods: 'get'
             }).then(response => {
                 commit('setOrganizations', response.data);

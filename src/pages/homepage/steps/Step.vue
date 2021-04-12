@@ -6,8 +6,10 @@
         <slot/>
 
         <q-stepper-navigation>
-            <q-btn :loading="loading" @click="next" color="primary" label="Продолжить"/>
-            <q-btn :loading="loading" v-if="name > 1" @click="prev" color="primary" label="Назад" class="q-ml-sm" flat/>
+            <slot name="navigation">
+                <q-btn :loading="loading" @click="next" color="primary" label="Продолжить"/>
+                <q-btn :loading="loading" v-if="name > 1" @click="prev" color="primary" label="Назад" class="q-ml-sm" flat/>
+            </slot>
         </q-stepper-navigation>
     </q-step>
 </template>
@@ -29,8 +31,7 @@ export default {
             required: true
         },
         beforeNext: {
-            type: Function,
-            required: true
+            type: Function
         }
     },
     data() {

@@ -1,6 +1,6 @@
 <template>
     <q-page class="flex flex-center">
-        <q-card style="width: 600px;">
+        <q-card style="width: 800px;">
             <q-tabs v-model="tab"
                     active-color="primary"
                     indicator-color="primary"
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import Registration from "components/Registration";
+import Registration from "./Registration";
 import Search       from "components/Search";
 
 export default {

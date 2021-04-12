@@ -18,12 +18,13 @@ export default {
     actions: {
         fetchServices({rootGetters, commit}, organization) {
             return api({
-                url: '/steps/services',
+                url: '/requests/step2',
                 method: 'get',
                 params: {
                     organization: organization
                 }
             }).then(response => {
+                if (response.data.length === 0) return Promise.reject('Выбраная организация не предоставляет услуг физическим лицам');
                 commit('setServices', response.data);
             });
         }

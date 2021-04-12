@@ -3,7 +3,17 @@ export default {
     state: {
         step: 1,
         organization: null,
-        service: null
+        service: null,
+        day: null,
+        time: null,
+        person: {
+            lastName: '',
+            firstName: '',
+            middleName: '',
+            birthday: '',
+            phone: '',
+            email: ''
+        }
     },
     getters: {
         getStep(state) {
@@ -14,6 +24,15 @@ export default {
         },
         getService(state) {
             return state.service;
+        },
+        getDay(state) {
+            return state.day;
+        },
+        getTime(state) {
+            return state.time;
+        },
+        getPerson(state) {
+            return state.person;
         }
     },
     mutations: {
@@ -25,6 +44,15 @@ export default {
         },
         setService(state, service) {
             state.service = service;
+        },
+        setDay(state, day) {
+            state.day = day;
+        },
+        setTime(state, time) {
+            state.time = time;
+        },
+        setPerson(state, person) {
+            state.person = person;
         }
     },
     actions: {},

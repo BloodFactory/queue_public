@@ -15,12 +15,12 @@
 </template>
 
 <script>
-import Step1 from "components/steps/Step1";
-import Step2 from "components/steps/Step2";
-import Step3 from "components/steps/Step3";
-import Step4 from "components/steps/Step4";
-import Step5 from "components/steps/Step5";
-import Step6 from "components/steps/Step6";
+import Step1 from "./steps/Step1";
+import Step2 from "./steps/Step2";
+import Step3 from "./steps/Step3";
+import Step4 from "./steps/Step4";
+import Step5 from "./steps/Step5";
+import Step6 from "./steps/Step6";
 
 export default {
     name: "Registration",

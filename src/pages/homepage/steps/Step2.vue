@@ -10,28 +10,20 @@
 </template>
 
 <script>
-import Step from "components/steps/Step";
+import Step from "pages/homepage/steps/Step";
 
 export default {
     name: "Step2",
     components: {
         Step
     },
-    data(){
+    data() {
         return {
             service: null
         }
     },
     computed: {
-        // service: {
-        //     get() {
-        //         return this.$store.getters['registration/getService'];
-        //     },
-        //     set(val) {
-        //         this.$store.commit('registration/setService', val);
-        //     }
-        // },
-        services(){
+        services() {
             return this.$store.getters['step2/getServices'];
         }
     },
@@ -45,8 +37,8 @@ export default {
                 this.$store.dispatch('step3/fetchDays', this.service.value).then(() => {
                     this.$store.commit('registration/setService', this.service);
                     resolve()
-                }).catch(() => {
-                    reject('Неудалось выполнить запрос');
+                }).catch(error => {
+                    reject(error);
                 });
             });
         }

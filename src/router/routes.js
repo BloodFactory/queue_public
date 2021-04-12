@@ -1,5 +1,5 @@
 import MainLayout from 'layouts/MainLayout.vue';
-import Homepage   from 'pages/Homepage.vue';
+import Homepage   from 'pages/homepage/Index.vue';
 
 const routes = [
     {

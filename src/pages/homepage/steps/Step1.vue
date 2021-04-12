@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import Step from "components/steps/Step";
+import Step from "pages/homepage/steps/Step";
 
 export default {
     name: "Step1",
@@ -41,8 +41,8 @@ export default {
                 this.$store.dispatch('step2/fetchServices', this.organization.value).then(() => {
                     this.$store.commit('registration/setOrganization', this.organization);
                     resolve()
-                }).catch(() => {
-                    reject('Неудалось выполнить запрос');
+                }).catch(error => {
+                    reject(error);
                 });
             });
         }

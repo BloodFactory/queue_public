@@ -18,13 +18,13 @@ export default {
     actions: {
         fetchDays({rootGetters, commit}, service) {
             return api({
-                url: '/steps/days',
+                url: '/requests/step3',
                 method: 'get',
                 params: {
                     service: service
                 }
             }).then(response => {
-                commit('setDays', response.data.days);
+                commit('setDays', response.data);
             });
         }
     }

@@ -5,6 +5,7 @@ import registration from "src/store/registration";
 import step1        from "src/store/step1";
 import step2        from "src/store/step2";
 import step3        from "src/store/step3";
+import step4        from "src/store/step4";
 
 // import example from './module-example'
 
@@ -26,7 +27,8 @@ export default function (/* { ssrContext } */) {
             registration,
             step1,
             step2,
-            step3
+            step3,
+            step4
         },
 
         // enable strict mode (adds overhead!)
