@@ -18,7 +18,7 @@ export default {
         }
     },
     mounted() {
-        this.$store.dispatch('step1/loadOrganizations').then(() => {
+        this.$store.dispatch('fetchOpenApplications').then(() => {
             this.loading = false;
         });
     }

@@ -1,15 +1,11 @@
-import Vue          from 'vue';
-import Vuex         from 'vuex';
-import tabs         from "src/store/tabs";
-import registration from "src/store/registration";
-import step1        from "src/store/step1";
-import step2        from "src/store/step2";
-import step3        from "src/store/step3";
-import step4        from "src/store/step4";
+import Vue   from 'vue';
+import Vuex  from 'vuex';
+import tabs  from "src/store/tabs";
+import {api} from "boot/axios";
 
 // import example from './module-example'
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 /*
  * If not building with SSR mode, you can
@@ -23,12 +19,27 @@ Vue.use(Vuex)
 export default function (/* { ssrContext } */) {
     const Store = new Vuex.Store({
         modules: {
-            tabs,
-            registration,
-            step1,
-            step2,
-            step3,
-            step4
+            tabs
+        },
+        state: {
+            requests: {}
+        },
+        getters: {},
+        mutations: {
+            setRequestssetRequests(state, requests) {
+                state.requests = requests
+            }
+        },
+        actions: {
+            fetchOpenApplications({commit}) {
+                return api({
+                    url: '/requests',
+                    methods: 'get'
+                }).then(response => {
+                    commit('setRequests', response.data);
+                    return Promise.resolve();
+                });
+            }
         },
 
         // enable strict mode (adds overhead!)
