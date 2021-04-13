@@ -41,7 +41,7 @@ export default {
     },
     computed: {
         step() {
-            return this.$store.getters['registration/getStep'];
+            return this.$store.getters['getStep'];
         },
         done() {
             return this.step > this.name;
@@ -54,7 +54,7 @@ export default {
             this.loading = true;
 
             this.beforeNext().then(() => {
-                this.$store.commit('registration/setStep', this.step + 1);
+                this.$store.commit('setStep', this.step + 1);
             }).catch(error => {
                 this.$q.notify({
                     message: error,
@@ -66,7 +66,7 @@ export default {
             });
         },
         prev() {
-            this.$store.commit('registration/setStep', this.step - 1);
+            this.$store.commit('setStep', this.step - 1);
         }
     }
 }

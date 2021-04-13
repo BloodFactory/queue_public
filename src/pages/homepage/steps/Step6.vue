@@ -12,7 +12,7 @@
                     <b>Услуга:</b> <span class="text-grey-8">{{ service && service.label }}</span>
                 </div>
                 <div class="param">
-                    <b>День:</b> <span class="text-grey-8">{{ day && day.value }}</span>
+                    <b>День:</b> <span class="text-grey-8">{{ day && day.date }}</span>
                 </div>
                 <div class="param">
                     <b>Время:</b> <span class="text-grey-8">{{ time && time.value }}</span>
@@ -21,22 +21,22 @@
             <div class="col">
                 <div class="text-h6 q-mb-md">Персональные данные</div>
                 <div class="param">
-                    <b>Фамилия:</b> <span class="text-grey-8">{{ person.lastName }}</span>
+                    <b>Фамилия:</b> <span class="text-grey-8">{{ person.hasOwnProperty('lastName') && person.lastName }}</span>
                 </div>
                 <div class="param">
-                    <b>Имя:</b> <span class="text-grey-8">{{ person.firstName }}</span>
+                    <b>Имя:</b> <span class="text-grey-8">{{ person.hasOwnProperty('firstName') && person.firstName }}</span>
                 </div>
                 <div class="param">
-                    <b>Отчество:</b> <span class="text-grey-8">{{ person.middleName ? person.middleName : 'Не указано' }}</span>
+                    <b>Отчество:</b> <span class="text-grey-8">{{ person.hasOwnProperty('middleName') && person.middleName ? person.middleName : 'Не указано' }}</span>
                 </div>
                 <div class="param">
-                    <b>Дата рождения:</b> <span class="text-grey-8">{{ person.birthday }}</span>
+                    <b>Дата рождения:</b> <span class="text-grey-8">{{ person.hasOwnProperty('birthday') && person.birthday }}</span>
                 </div>
                 <div class="param">
-                    <b>Телефон:</b> <span class="text-grey-8">{{ person.phone ? person.phone : 'Не указано' }}</span>
+                    <b>Телефон:</b> <span class="text-grey-8">{{ person.hasOwnProperty('phone') && person.phone ? person.phone : 'Не указано' }}</span>
                 </div>
                 <div class="param">
-                    <b>e-mail:</b> <span class="text-grey-8">{{ person.email ? person.email : 'Не указано' }}</span>
+                    <b>e-mail:</b> <span class="text-grey-8">{{ person.hasOwnProperty('email') && person.email ? person.email : 'Не указано' }}</span>
                 </div>
             </div>
         </div>
@@ -45,12 +45,11 @@
             <q-btn :loading="loading" @click="submit" color="green" label="Записаться"/>
             <q-btn :loading="loading" @click="prev" color="primary" label="Назад" class="q-ml-sm" flat/>
         </template>
-
     </Step>
 </template>
 
 <script>
-import Step from "pages/homepage/steps/Step";
+import Step from "./Step";
 
 export default {
     name: "Step6",
@@ -64,22 +63,22 @@ export default {
     },
     computed: {
         person() {
-            return this.$store.getters['registration/getPerson'];
+            return this.$store.getters['getPerson'];
         },
         organization() {
-            return this.$store.getters['registration/getOrganization'];
+            return this.$store.getters['getOrganization'];
         },
         service() {
-            return this.$store.getters['registration/getService'];
+            return this.$store.getters['getService'];
         },
         day() {
-            return this.$store.getters['registration/getDay'];
+            return this.$store.getters['getDay'];
         },
         time() {
-            return this.$store.getters['registration/getTime'];
+            return this.$store.getters['getTime'];
         },
         step() {
-            return this.$store.getters['registration/getStep'];
+            return this.$store.getters['getStep'];
         },
     },
     methods: {
@@ -91,18 +90,18 @@ export default {
                 email: this.person.email,
                 phone: this.person.phone,
                 service: this.service.value,
-                date: this.day.value,
+                date: this.day.date,
                 time: this.time.value
             };
 
             this.$api({
-                url: '/requests/registrate',
+                url: '/requests',
                 method: 'post',
                 data: data
             });
         },
         prev() {
-            this.$store.commit('registration/setStep', this.step - 1);
+            this.$store.commit('setStep', this.step - 1);
         }
     }
 }

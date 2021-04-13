@@ -1,7 +1,8 @@
 import Vue   from 'vue';
 import Vuex  from 'vuex';
-import tabs  from "src/store/tabs";
+import tabs  from "./tabs";
 import {api} from "boot/axios";
+
 
 // import example from './module-example'
 
@@ -22,12 +23,67 @@ export default function (/* { ssrContext } */) {
             tabs
         },
         state: {
-            requests: {}
+            step: 1,
+            requests: [],
+            organization: {},
+            service: {},
+            day: {},
+            time: {},
+            person: {}
         },
-        getters: {},
+        getters: {
+            getStep(state) {
+                return state.step;
+            },
+            getOrganizations(state) {
+                return state.requests;
+            },
+            getOrganization(state) {
+                return state.organization;
+            },
+            getServices(state) {
+                return state.organization.services;
+            },
+            getService(state) {
+                return state.service;
+            },
+            getDays(state) {
+                return state.service.appointments;
+            },
+            getDay(state) {
+                return state.day;
+            },
+            getTimes(state) {
+                return state.day.times;
+            },
+            getTime(state) {
+                return state.time;
+            },
+            getPerson(state) {
+                return state.person;
+            }
+        },
         mutations: {
-            setRequestssetRequests(state, requests) {
-                state.requests = requests
+            setStep(state, step) {
+                state.step = step;
+            },
+            setRequests(state, requests) {
+                state.requests = requests;
+            },
+            setOrganization(state, organization) {
+                state.organization = organization;
+            },
+            setService(state, service) {
+                state.service = service;
+            },
+            setDay(state, day) {
+                state.day = day;
+            },
+            setTime(state, time) {
+                state.time = time;
+            },
+            setPerson(state, person) {
+                state.person = person;
             }
         },
         actions: {

@@ -34,7 +34,7 @@ export default {
     },
     computed: {
         step() {
-            return this.$store.getters['registration/getStep'];
+            return this.$store.getters['getStep'];
         }
     },
 }

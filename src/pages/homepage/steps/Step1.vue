@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import Step from "pages/homepage/steps/Step";
+import Step from "./Step";
 
 export default {
     name: "Step1",
@@ -28,7 +28,7 @@ export default {
             return 'Организация' + (org ? ': ' + (org.label) : '');
         },
         organizations() {
-            return this.$store.getters['step1/getOrganizations'];
+            return this.$store.getters['getOrganizations'];
         }
     },
     methods: {
@@ -36,14 +36,11 @@ export default {
             return new Promise((resolve, reject) => {
                 if (!this.organization) return reject('Выберите организацию');
 
-                if (this.organization === this.$store.getters['registration/getOrganization']) return resolve();
+                if (this.organization === this.$store.getters['getOrganization']) return resolve();
 
-                this.$store.dispatch('step2/fetchServices', this.organization.value).then(() => {
-                    this.$store.commit('registration/setOrganization', this.organization);
-                    resolve()
-                }).catch(error => {
-                    reject(error);
-                });
+                this.$store.commit('setOrganization', this.organization);
+
+                return resolve();
             });
         }
     }

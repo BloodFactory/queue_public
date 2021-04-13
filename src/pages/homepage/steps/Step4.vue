@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import Step from "pages/homepage/steps/Step";
+import Step from "./Step";
 
 export default {
     name: "Step4",
@@ -26,7 +26,7 @@ export default {
     },
     computed: {
         times() {
-            return this.$store.getters['step4/getTimes'];
+            return this.$store.getters['getTimes'];
         }
     },
     methods: {
@@ -34,7 +34,7 @@ export default {
             return new Promise((resolve, reject) => {
                 if (!this.time) return reject('Выберите время');
 
-                this.$store.commit('registration/setTime', this.time);
+                this.$store.commit('setTime', this.time);
 
                 resolve();
             });

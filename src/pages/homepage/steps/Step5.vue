@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import Step from "pages/homepage/steps/Step";
+import Step from "./Step";
 
 export default {
     name: "Step5",
@@ -73,7 +73,7 @@ export default {
     },
     computed: {
         step() {
-            return this.$store.getters['registration/getStep'];
+            return this.$store.getters['getStep'];
         }
     },
     methods: {
@@ -81,13 +81,13 @@ export default {
             if (this.$refs.form.validate()) {
                 let person = {};
                 Object.assign(person, this.form);
-                this.$store.commit('registration/setPerson', person);
+                this.$store.commit('setPerson', person);
 
-                this.$store.commit('registration/setStep', this.step + 1);
+                this.$store.commit('setStep', this.step + 1);
             }
         },
         prev() {
-            this.$store.commit('registration/setStep', this.step - 1);
+            this.$store.commit('setStep', this.step - 1);
         }
     }
 }

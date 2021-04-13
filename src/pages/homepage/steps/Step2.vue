@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import Step from "pages/homepage/steps/Step";
+import Step from "./Step";
 
 export default {
     name: "Step2",
@@ -24,7 +24,7 @@ export default {
     },
     computed: {
         services() {
-            return this.$store.getters['step2/getServices'];
+            return this.$store.getters['getServices'];
         }
     },
     methods: {
@@ -32,14 +32,10 @@ export default {
             return new Promise((resolve, reject) => {
                 if (!this.service) return reject('Выберите услугу');
 
-                if (this.service === this.$store.getters['registration/getService']) return resolve();
+                if (this.service === this.$store.getters['getService']) return resolve();
 
-                this.$store.dispatch('step3/fetchDays', this.service.value).then(() => {
-                    this.$store.commit('registration/setService', this.service);
-                    resolve()
-                }).catch(error => {
-                    reject(error);
-                });
+                this.$store.commit('setService', this.service);
+                resolve();
             });
         }
     }
