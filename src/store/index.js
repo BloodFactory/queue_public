@@ -1,10 +1,8 @@
-import Vue   from 'vue';
-import Vuex  from 'vuex';
-import tabs  from "./tabs";
-import {api} from "boot/axios";
-
-
-// import example from './module-example'
+import Vue         from 'vue';
+import Vuex        from 'vuex';
+import {api}       from "boot/axios";
+import tabs        from "./tabs";
+import stepsValues from "./stepsValues";
 
 Vue.use(Vuex);
 
@@ -20,7 +18,8 @@ Vue.use(Vuex);
 export default function (/* { ssrContext } */) {
     const Store = new Vuex.Store({
         modules: {
-            tabs
+            tabs,
+            stepsValues
         },
         state: {
             step: 1,
@@ -36,7 +35,16 @@ export default function (/* { ssrContext } */) {
                 return state.step;
             },
             getOrganizations(state) {
-                return state.requests;
+                const organizations = [];
+
+                for (let organization of state.requests) {
+                    if (checkOrganizationForVacantRequests(organization)) {
+                        organizations.push(organization);
+                    }
+                }
+
+                return organizations;
+                // return state.requests;
             },
             getOrganization(state) {
                 return state.organization;
@@ -95,6 +103,19 @@ export default function (/* { ssrContext } */) {
                     commit('setRequests', response.data);
                     return Promise.resolve();
                 });
+            },
+            reload({dispatch, commit}) {
+                dispatch('fetchOpenApplications').then(() => {
+                    commit('setStep', 1);
+                    commit('setTime', {});
+                    commit('setDay', {});
+                    commit('setService', {});
+                    commit('setOrganization', {});
+
+                    dispatch('stepsValues/clear');
+
+                    return Promise.resolve();
+                });
             }
         },
 
@@ -104,4 +125,35 @@ export default function (/* { ssrContext } */) {
     })
 
     return Store
+}
+
+
+function checkOrganizationForVacantRequests(organization) {
+    let result = false;
+
+    for (let service of organization.services) {
+        result = result || checkServiceForVacantRequests(service);
+    }
+
+    return result;
+}
+
+function checkServiceForVacantRequests(service) {
+    let result = false;
+
+    for (let day of service.appointments) {
+        result = result || checkDayForVacantRequests(day);
+    }
+
+    return result;
+}
+
+function checkDayForVacantRequests(day) {
+    let result = false;
+
+    for (let time of day.times) {
+        result = result || time.free;
+    }
+
+    return result;
 }

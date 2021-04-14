@@ -4,8 +4,8 @@
           icon="mdi-clock-outline"
           :before-next="beforeNext">
         <div class="row q-col-gutter-md">
-            <div class="col-3" v-for="(t, index) in times" :key="index">
-                <q-btn :label="t.value" :color="time === t ? 'primary': 'green'" @click="time = t" class="full-width"/>
+            <div class="col-1" v-for="(time, index) in times" :key="index">
+                <q-btn :label="time.value" :color="color(time)" @click="setTime(time)" class="full-width" :disable="!time.free"/>
             </div>
         </div>
     </Step>
@@ -19,17 +19,28 @@ export default {
     components: {
         Step
     },
-    data() {
-        return {
-            time: null
-        }
-    },
     computed: {
         times() {
             return this.$store.getters['getTimes'];
+        },
+        time: {
+            get() {
+                return this.$store.getters['stepsValues/getTime'];
+            },
+            set(val) {
+                this.$store.commit('stepsValues/setTime', val);
+            }
         }
     },
     methods: {
+        color(time) {
+            if (!time.free) return 'red';
+
+            return this.time === time ? 'primary' : 'green';
+        },
+        setTime(time) {
+            this.time = time;
+        },
         beforeNext() {
             return new Promise((resolve, reject) => {
                 if (!this.time) return reject('Выберите время');

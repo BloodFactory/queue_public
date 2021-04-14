@@ -19,14 +19,17 @@ export default {
     components: {
         Step
     },
-    data() {
-        return {
-            day: null
-        }
-    },
     computed: {
         days() {
             return this.$store.getters['getDays'];
+        },
+        day: {
+            get() {
+                return this.$store.getters['stepsValues/getDay'];
+            },
+            set(val) {
+                this.$store.commit('stepsValues/setDay', val);
+            }
         }
     },
     methods: {

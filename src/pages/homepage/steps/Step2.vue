@@ -17,14 +17,17 @@ export default {
     components: {
         Step
     },
-    data() {
-        return {
-            service: null
-        }
-    },
     computed: {
         services() {
             return this.$store.getters['getServices'];
+        },
+        service: {
+            get() {
+                return this.$store.getters['stepsValues/getService'];
+            },
+            set(val) {
+                this.$store.commit('stepsValues/setService', val);
+            }
         }
     },
     methods: {

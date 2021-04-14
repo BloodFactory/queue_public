@@ -17,11 +17,6 @@ export default {
     components: {
         Step
     },
-    data() {
-        return {
-            organization: null
-        }
-    },
     computed: {
         title() {
             const org = this.$store.getters['registration/getOrganization'];
@@ -29,6 +24,14 @@ export default {
         },
         organizations() {
             return this.$store.getters['getOrganizations'];
+        },
+        organization: {
+            get() {
+                return this.$store.getters['stepsValues/getOrganization'];
+            },
+            set(val) {
+                this.$store.commit('stepsValues/setOrganization', val);
+            }
         }
     },
     methods: {

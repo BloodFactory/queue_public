@@ -83,6 +83,8 @@ export default {
     },
     methods: {
         submit() {
+            this.loading = true;
+
             const data = {
                 lastName: this.person.lastName,
                 firstName: this.person.firstName,
@@ -98,6 +100,21 @@ export default {
                 url: '/requests',
                 method: 'post',
                 data: data
+            }).then(() => {
+                this.$q.dialog({
+                    title: 'Успех',
+                    message: 'Ваша заявка принята и обрабатывается оператором',
+                }).onOk(() => {
+                    this.$store.dispatch('reload');
+                });
+            }).catch(error => {
+                this.$q.notify({
+                    message: error,
+                    type: 'negative',
+                    position: 'top'
+                });
+            }).finally(() => {
+                this.loading = false;
             });
         },
         prev() {
