@@ -5,7 +5,21 @@
           :before-next="beforeNext">
         <q-select label="Организация"
                   :options="organizations"
-                  v-model="organization"/>
+                  v-model="organization">
+            <template v-slot:option="{ itemProps, itemEvents, opt, selected, toggleOption }">
+                <q-item v-bind="itemProps"
+                        v-on="itemEvents"
+                        :class="opt.disable && 'bg-red-3 text-black'">
+                    <q-item-section>
+                        <q-item-label>{{ opt.label }}</q-item-label>
+                    </q-item-section>
+
+                    <q-tooltip v-if="opt.disable">
+                        Отсутствуют вакантным места
+                    </q-tooltip>
+                </q-item>
+            </template>
+        </q-select>
     </Step>
 </template>
 

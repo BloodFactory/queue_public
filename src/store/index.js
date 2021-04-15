@@ -6,15 +6,6 @@ import stepsValues from "./stepsValues";
 
 Vue.use(Vuex);
 
-/*
- * If not building with SSR mode, you can
- * directly export the Store instantiation;
- *
- * The function below can be async too; either use
- * async/await or return a Promise which resolves
- * with the Store instance.
- */
-
 export default function (/* { ssrContext } */) {
     const Store = new Vuex.Store({
         modules: {
@@ -38,25 +29,50 @@ export default function (/* { ssrContext } */) {
                 const organizations = [];
 
                 for (let organization of state.requests) {
-                    if (checkOrganizationForVacantRequests(organization)) {
-                        organizations.push(organization);
+                    if (!checkOrganizationForVacantRequests(organization)) {
+                        organization['disable'] = true;
                     }
+
+                    organizations.push(organization);
                 }
 
                 return organizations;
-                // return state.requests;
             },
             getOrganization(state) {
                 return state.organization;
             },
             getServices(state) {
-                return state.organization.services;
+                const services = [];
+
+                if (Array.isArray(state.organization.services)) {
+                    for (let service of state.organization.services) {
+                        if (!checkServiceForVacantRequests(service)) {
+                            service['disable'] = true;
+                        }
+
+                        services.push(service);
+                    }
+                }
+
+                return services;
             },
             getService(state) {
                 return state.service;
             },
             getDays(state) {
-                return state.service.appointments;
+                const days = [];
+
+                if (Array.isArray(state.service['appointments'])) {
+                    for (let day of state.service['appointments']) {
+                        if (!checkDayForVacantRequests(day)) {
+                            day['disable'] = true;
+                        }
+
+                        days.push(day);
+                    }
+                }
+
+                return days;
             },
             getDay(state) {
                 return state.day;
@@ -141,7 +157,7 @@ function checkOrganizationForVacantRequests(organization) {
 function checkServiceForVacantRequests(service) {
     let result = false;
 
-    for (let day of service.appointments) {
+    for (let day of service['appointments']) {
         result = result || checkDayForVacantRequests(day);
     }
 
@@ -152,7 +168,7 @@ function checkDayForVacantRequests(day) {
     let result = false;
 
     for (let time of day.times) {
-        result = result || time.free;
+        result = result || time['free'];
     }
 
     return result;
