@@ -1,7 +1,7 @@
 import Vue   from 'vue';
 import axios from 'axios';
 
-const baseURL = 'http://localhost:9999/api';
+const baseURL = process.env.API_BASE_URL;
 
 const api = axios.create({
     baseURL

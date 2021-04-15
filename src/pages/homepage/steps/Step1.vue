@@ -5,22 +5,31 @@
           :before-next="beforeNext">
         <q-select label="Организация"
                   :options="organizations"
-                  v-model="organization"/>
+                  v-model="organization">
+            <template v-slot:option="{ itemProps, itemEvents, opt, selected, toggleOption }">
+                <q-item v-bind="itemProps"
+                        v-on="itemEvents"
+                        :class="opt.disable && 'bg-red-3 text-black'">
+                    <q-item-section>
+                        <q-item-label>{{ opt.label }}</q-item-label>
+                    </q-item-section>
+
+                    <q-tooltip v-if="opt.disable">
+                        Отсутствуют вакантным места
+                    </q-tooltip>
+                </q-item>
+            </template>
+        </q-select>
     </Step>
 </template>
 
 <script>
-import Step from "pages/homepage/steps/Step";
+import Step from "./Step";
 
 export default {
     name: "Step1",
     components: {
         Step
-    },
-    data() {
-        return {
-            organization: null
-        }
     },
     computed: {
         title() {
@@ -28,7 +37,15 @@ export default {
             return 'Организация' + (org ? ': ' + (org.label) : '');
         },
         organizations() {
-            return this.$store.getters['step1/getOrganizations'];
+            return this.$store.getters['getOrganizations'];
+        },
+        organization: {
+            get() {
+                return this.$store.getters['stepsValues/getOrganization'];
+            },
+            set(val) {
+                this.$store.commit('stepsValues/setOrganization', val);
+            }
         }
     },
     methods: {
@@ -36,14 +53,11 @@ export default {
             return new Promise((resolve, reject) => {
                 if (!this.organization) return reject('Выберите организацию');
 
-                if (this.organization === this.$store.getters['registration/getOrganization']) return resolve();
+                if (this.organization === this.$store.getters['getOrganization']) return resolve();
 
-                this.$store.dispatch('step2/fetchServices', this.organization.value).then(() => {
-                    this.$store.commit('registration/setOrganization', this.organization);
-                    resolve()
-                }).catch(error => {
-                    reject(error);
-                });
+                this.$store.commit('setOrganization', this.organization);
+
+                return resolve();
             });
         }
     }

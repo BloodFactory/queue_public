@@ -5,7 +5,6 @@
 
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
-
 module.exports = function (/* ctx */) {
     return {
         // https://quasar.dev/quasar-cli/supporting-ts
@@ -43,6 +42,7 @@ module.exports = function (/* ctx */) {
 
         // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
         build: {
+            env: require('dotenv').config({}).parsed,
             publicPath: '/dist/spa/',
             vueRouterMode: 'history', // available values: 'hash', 'history'
 
@@ -95,7 +95,8 @@ module.exports = function (/* ctx */) {
             // Quasar plugins
             plugins: [
                 'Loading',
-                'Notify'
+                'Notify',
+                'Dialog'
             ]
         },
 
