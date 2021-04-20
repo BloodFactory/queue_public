@@ -5,7 +5,10 @@
           :before-next="beforeNext">
         <div class="row">
             <div class="col-3" v-for="(date, index) in days" :key="index">
-                <q-btn :label="date.date" :color="day === date ? 'primary': 'green'" @click="day = date"/>
+                <q-btn :label="date.date"
+                       :color="(date.hasOwnProperty('disable') && date.disable) ? 'red' : (day === date ? 'primary': 'green')"
+                       :disable="date.hasOwnProperty('disable') && date.disable"
+                       @click="day = date"/>
             </div>
         </div>
     </Step>

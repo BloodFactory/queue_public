@@ -88,6 +88,7 @@ export default {
             const data = {
                 lastName: this.person.lastName,
                 firstName: this.person.firstName,
+                middleName: this.person.middleName,
                 birthday: this.person.birthday,
                 email: this.person.email,
                 phone: this.person.phone,

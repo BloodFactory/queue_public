@@ -25,7 +25,7 @@ export default {
             return state.day;
         },
         getTime(state) {
-            return state.day;
+            return state.time;
         },
         getPersonLastName(state) {
             return state.person.lastName;
@@ -56,8 +56,8 @@ export default {
         setDay(state, day) {
             state.day = day;
         },
-        setTime(state, day) {
-            state.day = day;
+        setTime(state, time) {
+            state.time = time;
         },
         setPersonLastName(state, lastName) {
             state.person.lastName = lastName;

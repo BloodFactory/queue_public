@@ -4,8 +4,8 @@
           icon="mdi-clock-outline"
           :before-next="beforeNext">
         <div class="row q-col-gutter-md">
-            <div class="col-1" v-for="(time, index) in times" :key="index">
-                <q-btn :label="time.value" :color="color(time)" @click="setTime(time)" class="full-width" :disable="!time.free"/>
+            <div class="col-1" v-for="(_time, index) in times" :key="index">
+                <q-btn :label="_time.value" :color="!_time.free ? 'red' : (time === _time ? 'primary' : 'green')" @click="time = _time" class="full-width" :disable="!_time.free"/>
             </div>
         </div>
     </Step>

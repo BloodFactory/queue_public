@@ -14,7 +14,19 @@
                     <q-input label="Отчество" v-model="middleName"/>
                 </div>
                 <div class="col-6">
-                    <q-input label="Дата рождения" v-model="birthday" :rules="rules.birthday"/>
+                    <q-input label="Дата рождения" v-model="birthday" :rules="rules.birthday" mask="##.##.####">
+                        <template v-slot:append>
+                            <q-icon name="event" class="cursor-pointer">
+                                <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+                                    <q-date v-model="birthday" mask="DD.MM.YYYY" :locale="calendarLocale" :first-day-of-week="1">
+                                        <div class="row items-center justify-end">
+                                            <q-btn v-close-popup label="Закрыть" color="primary" flat/>
+                                        </div>
+                                    </q-date>
+                                </q-popup-proxy>
+                            </q-icon>
+                        </template>
+                    </q-input>
                 </div>
                 <div class="col-6">
                     <q-input label="Электроная почта" v-model="email" :rules="rules.email"/>
@@ -33,7 +45,8 @@
 </template>
 
 <script>
-import Step from "./Step";
+import {calendar} from 'src/helpers/locale';
+import Step       from "./Step";
 
 export default {
     name: "Step5",
@@ -42,6 +55,7 @@ export default {
     },
     data() {
         return {
+            calendarLocale: calendar,
             rules: {
                 lastName: [
                     v => !!v || 'Введите фамилию'
@@ -50,7 +64,7 @@ export default {
                     v => !!v || 'Введите имя'
                 ],
                 birthday: [
-                    v => /^[0-3]\d\.[0-1]\d\.[\d]+$/.test(v) || 'Введите корректную дату'
+                    v => /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/.test(v) || 'Введите корректную дату'
                 ],
                 email: [
                     v => this.email.length > 0 || this.phone.length > 0 || 'Укажите контактный телефон или электроную почту',
