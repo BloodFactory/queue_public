@@ -110,7 +110,7 @@ export default {
                 });
             }).catch(error => {
                 this.$q.notify({
-                    message: error,
+                    message: error.response.data,
                     type: 'negative',
                     position: 'top'
                 });
