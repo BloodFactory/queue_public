@@ -29,7 +29,7 @@
 
 <script>
 import Registration from "./Registration";
-import Search       from "components/Search";
+import Search       from "./Search";
 
 export default {
     name: 'PageIndex',
