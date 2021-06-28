@@ -7,11 +7,11 @@
                     align="justify"
                     dense
                     narrow-indicator>
-                <q-tab name="registration" label="Регистрация" />
-                <q-tab name="search" label="Поиск" />
+                <q-tab name="registration" label="Регистрация"/>
+                <q-tab name="search" label="Поиск"/>
             </q-tabs>
 
-            <q-separator />
+            <q-separator/>
 
             <q-tab-panels v-model="tab" animated>
                 <q-tab-panel name="registration">
@@ -28,14 +28,11 @@
 </template>
 
 <script>
-import Registration from "./Registration";
-import Search       from "./Search";
-
 export default {
     name: 'PageIndex',
     components: {
-        Registration,
-        Search
+        Registration: () => import('./Registration'),
+        Search: () => import('./Search')
     },
     data() {
         return {
